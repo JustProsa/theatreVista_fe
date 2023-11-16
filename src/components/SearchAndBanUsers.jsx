@@ -51,6 +51,67 @@ const SearchAndBanUsers = () => {
     setIsSearchActive(true);
   };
 
+  const handleBanUser = async (userId) => {
+    try {
+      await client.patch(`/users/${userId}/ban`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Rimuovi l'utente dalla lista degli utenti
+      const updatedUsers = users.filter((user) => user._id !== userId);
+      setUsers(updatedUsers);
+
+      // Aggiungi l'utente alla lista degli utenti bannati
+      const bannedUser = users.find((user) => user._id === userId);
+      setBannedUsers((prevBannedUsers) => [...prevBannedUsers, bannedUser]);
+
+      // Se la ricerca è attiva, rimuovi anche l'utente dalla lista filtrata
+      if (isSearchActive) {
+        const updatedFilteredUsers = filteredUsers.filter(
+          (user) => user._id !== userId
+        );
+        setFilteredUsers(updatedFilteredUsers);
+      }
+    } catch (error) {
+      console.error("Error banning user:", error);
+    }
+  };
+
+  const handleUnbanUser = async (userId) => {
+    try {
+      await client.patch(`/users/${userId}/unban`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Rimuovi l'utente dalla lista degli utenti bannati
+      const updatedBannedUsers = bannedUsers.filter(
+        (user) => user._id !== userId
+      );
+      setBannedUsers(updatedBannedUsers);
+
+      // Aggiungi l'utente alla lista degli utenti
+      const updatedUsers = [
+        ...users,
+        bannedUsers.find((user) => user._id === userId),
+      ];
+      setUsers(updatedUsers);
+
+      // Se la ricerca è attiva, aggiungi anche l'utente alla lista filtrata
+      if (isSearchActive) {
+        setFilteredUsers((prevFilteredUsers) => [
+          ...prevFilteredUsers,
+          bannedUsers,
+        ]);
+      }
+    } catch (error) {
+      console.error("Error unbanning user:", error);
+    }
+  };
+
   useEffect(() => {
     if (activeTab === "#users") {
       fetchUsers();
@@ -116,24 +177,54 @@ const SearchAndBanUsers = () => {
             </Form>
             {isSearchActive
               ? filteredUsers.map((user) => (
-                  <div key={user._id}>
-                    <p>{user.username}</p>
+                  <Row key={user._id} className="p-0 m-0 mt-2">
+                    <Col>{user.username}</Col>
+                    <Col>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleBanUser(user._id)}
+                      >
+                        {"Banna"} {user.username}
+                      </Button>
+                    </Col>
                     {/* Add other user details you want to display */}
-                  </div>
+                  </Row>
                 ))
               : users.map((user) => (
-                  <div key={user._id}>
-                    <p>{user.username}</p>
+                  <Row key={user._id} className="p-0 m-0 mt-2">
+                    <Col>{user.username}</Col>
+                    <Col>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleBanUser(user._id)}
+                      >
+                        {"Banna"} {user.username}
+                      </Button>
+                    </Col>
                     {/* Add other user details you want to display */}
-                  </div>
+                  </Row>
                 ))}
           </div>
         )}
         {activeTab === "#bannedUsers" && (
           <div>
-            <Card.Title>Special title treatment - Tab 2</Card.Title>
-            <Card.Text>Content for the second tab.</Card.Text>
-            <Button variant="primary">Go somewhere else</Button>
+            {bannedUsers.length > 0 ? (
+              bannedUsers.map((user) => (
+                <Row key={user._id} className="p-0 m-0 mt-2">
+                  <Col>{user.username}</Col>
+                  <Col>
+                    <Button
+                      variant="outline-success"
+                      onClick={() => handleUnbanUser(user._id)}
+                    >
+                      {"Sbanna"} {user.username}
+                    </Button>
+                  </Col>
+                </Row>
+              ))
+            ) : (
+              <p>Nessun utente bannato... MENO MALE!</p>
+            )}
           </div>
         )}
         {activeTab === "#usersReports" && (

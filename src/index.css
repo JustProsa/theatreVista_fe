@@ -27,6 +27,15 @@ code {
   color: #c92a2a;
 }
 
+.footer-link {
+  font-family: 'Fasthand', cursive !important;
+  font-size: 4.8rem;
+  color: #c92a2a;
+  text-decoration: none;
+  display: block;
+  margin: 0 auto;
+}
+
 .home-container {
  
   height: 100vh;

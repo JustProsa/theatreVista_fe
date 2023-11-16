@@ -13,7 +13,9 @@ const Shows = () => {
 
   const fetchShows = async (page) => {
     try {
-      const response = await client.get(`/shows?page=${page}`);
+      const response = await client.get(
+        `/shows/bystartdate?page=${page}&sortBy=startDate`
+      );
       const { currentPage, totalPages, shows } = response;
       setCurrentPage(currentPage);
       setTotalPages(totalPages);
@@ -30,7 +32,6 @@ const Shows = () => {
   useEffect(() => {
     fetchShows(currentPage);
   }, [currentPage]);
-
   return (
     <NavbarLayout>
       <div
