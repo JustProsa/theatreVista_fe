@@ -123,6 +123,7 @@ const MyArea = () => {
                 rating={review.rating}
                 user={review.user.username}
                 showTitle={review.show.title}
+                showId={review.show._id}
               />
             ))}
           </div>
