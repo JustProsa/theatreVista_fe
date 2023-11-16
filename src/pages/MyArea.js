@@ -13,36 +13,6 @@ const MyArea = () => {
   const [user, setUser] = useState(null);
   const [reviews, setReviews] = useState({ reviews: [] });
 
-  // const fetchReviews = async () => {
-  //   try {
-  //     if (user) {
-  //       const response = await client.get(`/reviews/user/${user._id}`);
-  //       setReviews(response);
-
-  //       console.log("Recensioni dell' utente:", response);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching reviews:", error);
-  //   }
-  // };
-
-  // const getUserDetails = async () => {
-  //   const token = localStorage.getItem("loggedInUser");
-  //   try {
-  //     const userData = await client.get(`/users/details`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     setUser(userData);
-
-  //     console.log("Dettagli dell'utente:", userData);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("loggedInUser");

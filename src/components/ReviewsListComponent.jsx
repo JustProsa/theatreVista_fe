@@ -32,6 +32,7 @@ const ReviewList = ({ showId }) => {
           rating={review.rating}
           user={review.user.username}
           showTitle={review.show.title}
+          createdAt={review.createdAt}
         />
       ))}
     </>

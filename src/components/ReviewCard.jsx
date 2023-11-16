@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Navbar, Card } from "react-bootstrap";
+import { Container, Navbar, Card, NavLink } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ReviewCard = ({
@@ -9,8 +9,21 @@ const ReviewCard = ({
   user,
   showTitle,
   showId,
+  createdAt,
   userId,
 }) => {
+  const formatCreatedAt = (createdAt) => {
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+
+    return new Date(createdAt).toLocaleString("it-IT", options);
+  };
+
   return (
     <>
       <Card
@@ -29,16 +42,16 @@ const ReviewCard = ({
               border: "none",
             }}
           >
-            <Link to={"/"} style={{ textDecoration: "none" }}>
-              <Navbar.Brand
-                href="#home"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  color: "white",
-                }}
-                className="p-0 m-0"
-              >
+            <Navbar.Brand
+              href="#home"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "white",
+              }}
+              className="p-0 m-0"
+            >
+              <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
                 <img
                   alt=""
                   src={userAvatar}
@@ -46,9 +59,9 @@ const ReviewCard = ({
                   height="50"
                   className="d-inline-block align-top rounded"
                 />{" "}
-                <p className="p-2">{user}</p>
-              </Navbar.Brand>
-            </Link>
+                <span className="px-3">{user}</span>
+              </Link>
+            </Navbar.Brand>
           </Navbar>
         </Card.Header>
         <Card.Body>
@@ -60,6 +73,9 @@ const ReviewCard = ({
           </Link>
           <Card.Text style={{ color: "white" }}>{comment}</Card.Text>
           <Card.Text style={{ color: "white" }}>{rating} /5</Card.Text>
+          <Card.Text style={{ color: "white", fontSize: "0.8rem" }}>
+            {formatCreatedAt(createdAt)}
+          </Card.Text>
         </Card.Body>
       </Card>
     </>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Container } from "react-bootstrap";
-import Footer from "./Footer";
+import JumbotronFooter from "./JumbotronFooter";
 import "./navbar.css";
 import "../style/global.css";
 import img1 from "../imgs/moschette.jpg";
@@ -38,10 +38,10 @@ const HomeJumbotron = () => {
     <>
       <Container fluid>
         <Row className="home-container no-gutters align-items-center justify-content-center">
-          <Col className="text-center" sm={12} md={4}>
+          <Col className="text-center" sm={12} md={12} lg={4}>
             <h1 className="jumbotron-title">Theatre</h1>
           </Col>
-          <Col className="text-center m-0 p-0" sm={12} md={4}>
+          <Col className="text-center m-0 p-0" sm={12} md={12} lg={4}>
             <div
               className="shadow-sm images-container"
               onMouseEnter={() => setIsHovered(true)}
@@ -55,11 +55,11 @@ const HomeJumbotron = () => {
               />
             </div>
           </Col>
-          <Col className="text-center m-0 p-0" sm={12} md={4}>
+          <Col className="text-center m-0 p-0" sm={12} md={12} lg={4}>
             <h1 className="jumbotron-title">Vista</h1>
           </Col>
           <Col sm={12} className="text-center">
-            <Footer />
+            <JumbotronFooter />
           </Col>
         </Row>
       </Container>

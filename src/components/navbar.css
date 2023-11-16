@@ -1,4 +1,4 @@
-.home-container {
+/* .home-container {
  
   height: 100vh;
   background-color: #dbd5c9;
@@ -22,19 +22,9 @@
 .jumbotron-title {
   font-size: 5.2rem;
   color: #00001c;
-}
+} */
 
-@media (max-width: 768px) {
-  .jumbotron-title {
-    font-size: 3.2rem; /* Dimensione più piccola per dispositivi con larghezza massima di 768px */
-  }
 
-  .images-container {
-    width: 80vw;
-    height: 70vw;
-    padding: 0.5rem;
-  }
-}
 
 
 
