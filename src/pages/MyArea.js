@@ -45,8 +45,6 @@ const MyArea = () => {
 
   useEffect(() => {
     getUserDetails();
-  }, [username]);
-  useEffect(() => {
     fetchReviews();
   }, [username]);
 
