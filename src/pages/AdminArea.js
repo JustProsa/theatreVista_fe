@@ -19,7 +19,7 @@ const AdminArea = () => {
       </div>
       <Row
         className="m-0 p-0"
-        style={{ backgroundColor: "#dbd5c9", height: "100vh" }}
+        style={{ backgroundColor: "#dbd5c9", height: "100%" }}
       >
         <Col sm={12} md={6} className="m-0 p-0">
           <FindAndUpdateShows />
