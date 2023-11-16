@@ -13,6 +13,29 @@ const ShowDetails = () => {
   const [show, setShow] = useState(null);
   const [user, setUser] = useState(null);
 
+  const formatStartDate = (startDate) => {
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+
+    return new Date(startDate).toLocaleString("it-IT", options);
+  };
+  const formatEndDate = (endDate) => {
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+
+    return new Date(endDate).toLocaleString("it-IT", options);
+  };
+
   const getUserDetails = async () => {
     const token = localStorage.getItem("loggedInUser");
     try {
@@ -72,6 +95,41 @@ const ShowDetails = () => {
                   </Card.Title>
                   <Card.Text style={{ fontSize: "1.4rem" }}>
                     {show.description}
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: "1.4rem" }}>
+                    <span style={{ fontWeight: "bold" }}>Di: </span> {show.by}
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: "1.4rem" }}>
+                    <span style={{ fontWeight: "bold" }}>Scritto da: </span>{" "}
+                    {show.dramaturgy}
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: "1.4rem" }}>
+                    <span style={{ fontWeight: "bold" }}>Diretto da: </span>{" "}
+                    {show.direction}
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: "1.4rem" }}>
+                    <span style={{ fontWeight: "bold" }}>Con: </span>{" "}
+                    {show.actors}
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: "1.4rem" }}>
+                    <span style={{ fontWeight: "bold" }}>Prodotto da: </span>{" "}
+                    {show.production}
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: "1.4rem" }}>
+                    <span style={{ fontWeight: "bold" }}>{show.location} </span>{" "}
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: "1.4rem" }}>
+                    <span style={{ fontWeight: "bold" }}>{show.duration}</span>
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: "1.4rem" }}>
+                    <span style={{ fontWeight: "bold" }}>
+                      {formatStartDate(show.startDate)}
+                    </span>
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: "1.4rem" }}>
+                    <span style={{ fontWeight: "bold" }}>
+                      {formatEndDate(show.endDate)}
+                    </span>
                   </Card.Text>
 
                   {user && <AddReviewModal showId={id} userId={user._id} />}

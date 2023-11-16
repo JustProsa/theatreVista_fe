@@ -8,6 +8,8 @@ const LoginModal = ({ onLogin }) => {
   const [show, setShow] = useState(false);
   const [loginData, setLoginData] = useState({});
   const [login, setLogin] = useState(null);
+  const [showBanModal, setshowBanModal] = useState(false);
+  const [user, setUser] = useState({});
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -38,6 +40,7 @@ const LoginModal = ({ onLogin }) => {
 
         console.log("Dettagli dell'utente:", userData);
         onLogin(userData);
+        setUser(userData);
       } else {
         console.log("OOOOPS!");
       }

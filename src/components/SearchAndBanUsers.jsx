@@ -9,6 +9,7 @@ import {
   Col,
 } from "react-bootstrap";
 import AxiosClient from "../client/client";
+import ReportCard from "./ReportCard";
 
 const client = new AxiosClient();
 const token = localStorage.getItem("loggedInUser");
@@ -18,6 +19,7 @@ const SearchAndBanUsers = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [bannedUsers, setBannedUsers] = useState([]);
+  const [reports, setReports] = useState([]);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -32,10 +34,36 @@ const SearchAndBanUsers = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUsers(response.users);
-      setFilteredUsers(response.users);
+
+      // Estrai utenti e report dalla risposta
+      const { users } = response;
+
+      // Filtra gli utenti bannati
+      const bannedUsers = users.filter((user) => user.isBanned);
+
+      // Filtra gli utenti non bannati
+      const nonBannedUsers = users.filter((user) => !user.isBanned);
+
+      // Aggiorna lo stato degli utenti e dei report
+      setUsers(nonBannedUsers);
+      setFilteredUsers(nonBannedUsers);
+      setBannedUsers(bannedUsers);
     } catch (error) {
       console.error("Error fetching users:", error);
+    }
+  };
+
+  const fetchReports = async () => {
+    try {
+      const response = await client.get("/reports?sortBy=createdAt", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setReports(response);
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching reports:", error);
     }
   };
 
@@ -115,6 +143,8 @@ const SearchAndBanUsers = () => {
   useEffect(() => {
     if (activeTab === "#users") {
       fetchUsers();
+    } else if (activeTab === "#usersReports") {
+      fetchReports();
     }
   }, [activeTab]);
 
@@ -210,7 +240,7 @@ const SearchAndBanUsers = () => {
           <div>
             {bannedUsers.length > 0 ? (
               bannedUsers.map((user) => (
-                <Row key={user._id} className="p-0 m-0 mt-2">
+                <Row className="p-0 m-0 mt-2">
                   <Col>{user.username}</Col>
                   <Col>
                     <Button
@@ -228,10 +258,22 @@ const SearchAndBanUsers = () => {
           </div>
         )}
         {activeTab === "#usersReports" && (
-          <div>
-            <Card.Title>Special title treatment - Tab 3</Card.Title>
-            <Card.Text>Content for the second tab.</Card.Text>
-            <Button variant="primary">Go somewhere else</Button>
+          <div className="users-reports">
+            {reports.length > 0 ? (
+              reports.map((report) => (
+                <ReportCard
+                  id={report._id}
+                  object={report.object}
+                  user={report.user ? report.user.username : report.name}
+                  name={report.name}
+                  text={report.text}
+                  createdAt={report.createdAt}
+                  email={report.user ? report.user.email : report.email}
+                />
+              ))
+            ) : (
+              <p>Nessun report degli utenti disponibile.</p>
+            )}
           </div>
         )}
       </Card.Body>

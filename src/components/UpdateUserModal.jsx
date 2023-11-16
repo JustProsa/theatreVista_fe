@@ -83,6 +83,7 @@ const UpdateUserModal = ({
 
         // Aggiorna lo stato o compi altre azioni necessarie in seguito all'aggiornamento
         console.log(`${fieldName} updated:`, response);
+        window.alert(`${fieldName} modificato con successo!`);
       } else {
         // Patch standard per gli altri campi
         const updatedData = { [fieldName]: userData[fieldName] };
@@ -98,6 +99,7 @@ const UpdateUserModal = ({
 
         // Aggiorna lo stato o compi altre azioni necessarie in seguito all'aggiornamento
         console.log(`${fieldName} updated:`, response);
+        window.alert(`${fieldName} modificato con successo!`);
       }
     } catch (error) {
       console.error(`Error updating ${fieldName}`, error);
@@ -133,6 +135,7 @@ const UpdateUserModal = ({
 
       // Aggiorna lo stato o compi altre azioni necessarie in seguito all'aggiornamento della password
       console.log("Password updated:", response);
+      window.alert("Password modificata con successo!");
 
       // Resetta i campi delle password dopo l'aggiornamento
       setPassword("");

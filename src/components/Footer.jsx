@@ -1,4 +1,5 @@
 import React from "react";
+import ReportsModal from "./ReportsModal";
 
 const Footer = () => {
   const contactEmail = "tuoindirizzo@email.com";
@@ -11,12 +12,7 @@ const Footer = () => {
           aiuto per qualsiasi necessità?
         </p>
         <p style={{ textAlign: "center" }}>
-          <a
-            href={`mailto:${contactEmail}`}
-            className="contact-link footer-link"
-          >
-            CONTATTACI
-          </a>
+          <ReportsModal />
         </p>
       </div>
     </footer>

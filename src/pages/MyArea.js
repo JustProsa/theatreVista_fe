@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col, Image, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import AxiosClient from "../client/client";
 import NavbarLayout from "../layouts/NavbarLayout";
@@ -7,6 +7,7 @@ import UpdateUserModal from "../components/UpdateUserModal";
 import ReviewCard from "../components/ReviewCard";
 
 const client = new AxiosClient();
+const token = localStorage.getItem("loggedInUser");
 
 const MyArea = () => {
   const { username } = useParams();
@@ -30,6 +31,22 @@ const MyArea = () => {
       console.log("Recensioni dell' utente:", response);
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    if (window.confirm("Sei sicuro di voler eliminare il tuo account?")) {
+      try {
+        const response = await client.delete(`/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log("User deleted:", response);
+      } catch (error) {
+        console.error("Error deleting user", error);
+      }
     }
   };
 
@@ -65,6 +82,17 @@ const MyArea = () => {
                   {user.firstName} {user.lastName}
                 </h2>
                 <h2>{formattedDate}</h2>
+                <h2>{user.email}</h2>
+                <div className="mt-5">
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => {
+                      handleDeleteUser(user?._id);
+                    }}
+                  >
+                    Elimina Account
+                  </Button>
+                </div>
               </div>
             </Col>
             <Col sm={12} md={6} className="m-0 p-0">

@@ -61,6 +61,7 @@ const Registration = () => {
         console.log("Dettagli dell'utente:", userData);
 
         setRegistrationSuccess(true);
+        window.alert("Registrazione effettuata con successo");
       } else {
         console.log("OOOOPS!");
       }
