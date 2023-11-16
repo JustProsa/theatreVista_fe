@@ -6,6 +6,7 @@ import MyArea from "./pages/MyArea";
 import AdminArea from "./pages/AdminArea";
 import Shows from "./pages/Shows";
 import ShowDetails from "./pages/ShowDetails";
+import ProtectedRoutes from "./middlewares/ProtectedRoutes";
 
 const App = () => {
   return (
@@ -14,10 +15,12 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Homepage />} />
           <Route path="/registration" element={<Registration />} />
-          <Route path="/myArea/:username" element={<MyArea />} />
-          <Route path="/area-admin" element={<AdminArea />} />
-          <Route path="/shows" element={<Shows />} />
-          <Route path="/show-details/:title/:id" element={<ShowDetails />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/myArea/:username" element={<MyArea />} />
+            <Route path="/area-admin" element={<AdminArea />} />
+            <Route path="/shows" element={<Shows />} />
+            <Route path="/show-details/:title/:id" element={<ShowDetails />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
