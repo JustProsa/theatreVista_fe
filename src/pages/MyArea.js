@@ -19,7 +19,7 @@ const MyArea = () => {
         const response = await client.get(`/reviews/user/${user._id}`);
         setReviews(response);
 
-        console.log("Recensioni dell' utente:", reviews);
+        console.log("Recensioni dell' utente:", response);
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
