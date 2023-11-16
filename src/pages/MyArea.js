@@ -69,7 +69,7 @@ const MyArea = () => {
             </Col>
             <Col sm={12} md={6} className="m-0 p-0">
               <UpdateUserModal
-                userId={user?.id}
+                userId={user?._id}
                 firstName={user?.firstName}
                 lastName={user?.lastName}
                 email={user?.email}

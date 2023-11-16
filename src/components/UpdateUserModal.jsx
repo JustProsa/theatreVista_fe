@@ -71,22 +71,30 @@ const UpdateUserModal = ({
 
         // Patch dell'URL della nuova immagine della copertina
         const updatedData = { avatar: uploadResponse.avatar };
-        const response = await client.patch(`/users/${userId}`, updatedData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await client.patch(
+          `/users/update/${userId}`,
+          updatedData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         // Aggiorna lo stato o compi altre azioni necessarie in seguito all'aggiornamento
         console.log(`${fieldName} updated:`, response);
       } else {
         // Patch standard per gli altri campi
         const updatedData = { [fieldName]: userData[fieldName] };
-        const response = await client.patch(`/users/${userId}`, updatedData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await client.patch(
+          `/users/update/${userId}`,
+          updatedData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         // Aggiorna lo stato o compi altre azioni necessarie in seguito all'aggiornamento
         console.log(`${fieldName} updated:`, response);
@@ -99,11 +107,11 @@ const UpdateUserModal = ({
   const handlePasswordChange = async () => {
     try {
       // Verifica che l'utente autenticato stia modificando solo i propri dati
-      const loggedInUser = client.getUserInfo();
-      if (loggedInUser.userId !== userId) {
-        console.error("Unauthorized: You can only update your own data.");
-        return;
-      }
+      // const loggedInUser = client.getUserInfo();
+      // if (loggedInUser.userId !== userId) {
+      //   console.error("Unauthorized: You can only update your own data.");
+      //   return;
+      // }
 
       // Verifica che le due password coincidano
       if (password !== confirmPassword) {
@@ -113,11 +121,15 @@ const UpdateUserModal = ({
 
       // Patch della password
       const updatedData = { password };
-      const response = await client.patch(`/users/${userId}`, updatedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await client.patch(
+        `/users/update/${userId}`,
+        updatedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       // Aggiorna lo stato o compi altre azioni necessarie in seguito all'aggiornamento della password
       console.log("Password updated:", response);

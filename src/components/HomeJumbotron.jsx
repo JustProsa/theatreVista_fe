@@ -1,29 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import JumbotronFooter from "./JumbotronFooter";
-import "./navbar.css";
-import "../style/global.css";
-import img1 from "../imgs/moschette.jpg";
-import img2 from "../imgs/hypergaia.jpg";
-import img3 from "../imgs/qanon.jpg";
-import img4 from "../imgs/vitamorterivoluzione.jpg";
-import img5 from "../imgs/stillalive.jpg";
-import img6 from "../imgs/lidodissea.jpg";
-import img7 from "../imgs/hotelborges.jpg";
-import img8 from "../imgs/Sergio.jpg";
+import AxiosClient from "../client/client";
 
-const images = [img1, img2, img3, img4, img5, img6, img7, img8];
+const client = new AxiosClient();
 
 const HomeJumbotron = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [topRatedShows, setTopRatedShows] = useState([]);
 
   useEffect(() => {
     let intervalId;
 
     if (isHovered) {
       intervalId = setInterval(() => {
-        setCurrentImage((prevIndex) => (prevIndex + 1) % images.length);
+        setCurrentImage((prevIndex) => (prevIndex + 1) % topRatedShows.length);
       }, 200);
     }
 
@@ -32,7 +24,23 @@ const HomeJumbotron = () => {
         clearInterval(intervalId);
       }
     };
-  }, [isHovered]);
+  }, [isHovered, topRatedShows]);
+
+  useEffect(() => {
+    // Nuova chiamata API per ottenere gli spettacoli ordinati per valutazione
+    const fetchTopRatedShows = async () => {
+      try {
+        const response = await client.get("/shows", {
+          params: { pageSize: 4 },
+        });
+        setTopRatedShows(response.shows);
+      } catch (error) {
+        console.error("Error fetching top-rated shows:", error);
+      }
+    };
+
+    fetchTopRatedShows();
+  }, []);
 
   return (
     <>
@@ -48,7 +56,7 @@ const HomeJumbotron = () => {
               onMouseLeave={() => setIsHovered(false)}
             >
               <img
-                src={images[currentImage]}
+                src={topRatedShows[currentImage]?.cover}
                 alt="Immagine"
                 className="img-fluid shadow-sm"
                 style={{ height: "100%" }}
