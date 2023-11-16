@@ -43,6 +43,9 @@ const LoginModal = ({ onLogin }) => {
         setUser(userData);
       } else {
         console.log("OOOOPS!");
+        windows.alert(
+          "C'è un problema con il login, riprova o prega il demonio"
+        );
       }
 
       setLogin(response);
