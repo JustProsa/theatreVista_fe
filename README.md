@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# TheatreVista 🎭
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Benvenuto su TheatreVista, il luogo perfetto per esplorare e recensire spettacoli teatrali! 🌟
 
-## Available Scripts
+## Link Utili 🌐
 
-In the project directory, you can run:
+- [TheatreVista Live](https://main--helpful-bienenstitch-dc610e.netlify.app/)
+- [Frontend Repository](https://github.com/JustProsa/theatrevista_fe)
+- [Backend Repository](https://github.com/JustProsa/theatrevista_be)
 
-### `npm start`
+## Descrizione 📜
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+TheatreVista è una piattaforma dedicata a recensioni di performance artistiche, ispirata dalla passione per la recitazione e gli studi attoriali. Gli utenti possono trovare, recensire e scoprire spettacoli teatrali, con un sistema di votazione e classificazione. Il backend gestisce recensioni, mostra le più popolari e offre raccomandazioni basate sui gusti degli utenti. Attualmente focalizzato su spettacoli a Torino, ma il futuro potrebbe riservare sorprese! 😉🎉
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tecnologie Utilizzate 🚀
 
-### `npm test`
+- React
+- React-Bootstrap
+- NodeJS
+- MongoDB
+- Express
+- Mongoose
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Struttura del Progetto 🏗️
 
-### `npm run build`
+Il progetto è strutturato in frontend e backend. Ecco un breve elenco dei principali file:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **App.js**: Gestisce le route principali dell'app.
+- **Homepage.js**: Pagina principale del sito.
+- **MyArea.js**: Pagina dell'utente, con dettagli e recensioni.
+- **AdminArea.js**: Area amministrativa per la gestione dello spettacolo.
+- **Registration.js**: Pagina di registrazione.
+- **ShowDetails.js**: Dettagli di uno spettacolo specifico.
+- **Shows.js**: Elenco di tutti gli spettacoli.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Backend
 
-### `npm run eject`
+- **server.js**: Punto di ingresso del server, connessione al database e avvio del server.
+- **routes/**: Contiene i file delle rotte per utenti, spettacoli, login, recensioni e segnalazioni.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Crediti 🙌
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Grazie per aver reso possibile TheatreVista:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- [EPICODE](https://www.epicode.com)
+- [React](https://reactjs.org/)
+- [React-Bootstrap](https://react-bootstrap.github.io/)
+- [NodeJS](https://nodejs.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Express](https://expressjs.com/)
+- [Mongoose](https://mongoosejs.com/)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Contatti 📬
 
-## Learn More
+Per domande o informazioni, contattaci su [pietrorosano.code@gmail.com](mailto:pietrorosano.code@gmail.com).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Buon teatro su TheatreVista! 🎉
