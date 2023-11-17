@@ -54,6 +54,6 @@ Grazie per aver reso possibile TheatreVista:
 
 ## Contatti 📬
 
-Per domande o informazioni, contattaci su [pietrorosano.code@gmail.com](mailto:pietrorosano.code@gmail.com).
+Per domande o informazioni, contattami su [pietrorosano.code@gmail.com](mailto:pietrorosano.code@gmail.com).
 
 Buon teatro su TheatreVista! 🎉
