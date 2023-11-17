@@ -7,6 +7,7 @@ import {
   Row,
   Col,
   Pagination,
+  Spinner,
 } from "react-bootstrap";
 import AxiosClient from "../client/client";
 import UpdateShowModal from "./UpdateShowModal";
@@ -21,13 +22,16 @@ const FindAndUpdateShows = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [filteredShows, setFilteredShows] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchShows = async (page) => {
     try {
+      setIsLoading(true);
       const response = await client.get(`/shows?page=${currentPage}`);
       setShows(response.shows);
       setFilteredShows(response.shows);
       setTotalPages(response.totalPages);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching shows", error);
     }
@@ -111,87 +115,63 @@ const FindAndUpdateShows = () => {
       </Row>
 
       <Row className="mt-3">
-        {isSearchActive
-          ? filteredShows.map((show) => (
-              <Col key={show._id} xs={12} sm={12} md={6}>
-                <Card
-                  style={{
-                    maxWidth: "18rem",
-                    backgroundColor: "transparent",
-                    border: "1px solid black",
-                  }}
-                  className="mb-3"
-                >
-                  <Card.Img variant="top" src={show.cover} />
-                  <Card.Body>
-                    <Card.Title>{show.title}</Card.Title>
-                    <UpdateShowModal
-                      title={show.title}
-                      by={show.by}
-                      description={show.description}
-                      cover={show.cover}
-                      actors={show.actors}
-                      startDate={show.startDate}
-                      endDate={show.endDate}
-                      location={show.location}
-                      duration={show.duration}
-                      exhibition={show.exhibition}
-                      direction={show.direction}
-                      production={show.production}
-                      dramaturgy={show.dramaturgy}
-                      showId={show._id}
-                    />
-                    <Button
-                      variant="danger"
-                      className="m-2"
-                      onClick={() => handleDeleteShow(show._id)}
-                    >
-                      Elimina
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))
-          : shows.map((show) => (
-              <Col key={show._id} xs={12} sm={12} md={6}>
-                <Card
-                  style={{
-                    maxWidth: "18rem",
-                    backgroundColor: "transparent",
-                    border: "1px solid black",
-                  }}
-                  className="mb-3"
-                >
-                  <Card.Img variant="top" src={show.cover} />
-                  <Card.Body>
-                    <Card.Title>{show.title}</Card.Title>
-                    <UpdateShowModal
-                      title={show.title}
-                      by={show.by}
-                      description={show.description}
-                      cover={show.cover}
-                      actors={show.actors}
-                      startDate={show.startDate}
-                      endDate={show.endDate}
-                      location={show.location}
-                      duration={show.duration}
-                      exhibition={show.exhibition}
-                      direction={show.direction}
-                      production={show.production}
-                      dramaturgy={show.dramaturgy}
-                      showId={show._id}
-                    />
-                    <Button
-                      variant="danger"
-                      className="m-2"
-                      onClick={() => handleDeleteShow(show._id)}
-                    >
-                      Elimina
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
+        {isLoading ? (
+          // Se isLoading è true, mostra lo spinner centrato
+          <Col
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </Col>
+        ) : (
+          // Se isLoading è false, mostra il contenuto della pagina
+          (isSearchActive ? filteredShows : shows).map((show) => (
+            <Col key={show._id} xs={12} sm={12} md={6}>
+              <Card
+                style={{
+                  maxWidth: "18rem",
+                  backgroundColor: "transparent",
+                  border: "1px solid black",
+                }}
+                className="mb-3"
+              >
+                <Card.Img variant="top" src={show.cover} />
+                <Card.Body>
+                  <Card.Title>{show.title}</Card.Title>
+                  <UpdateShowModal
+                    title={show.title}
+                    by={show.by}
+                    description={show.description}
+                    cover={show.cover}
+                    actors={show.actors}
+                    startDate={show.startDate}
+                    endDate={show.endDate}
+                    location={show.location}
+                    duration={show.duration}
+                    exhibition={show.exhibition}
+                    direction={show.direction}
+                    production={show.production}
+                    dramaturgy={show.dramaturgy}
+                    showId={show._id}
+                  />
+                  <Button
+                    variant="danger"
+                    className="m-2"
+                    onClick={() => handleDeleteShow(show._id)}
+                  >
+                    Elimina
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))
+        )}
       </Row>
     </Container>
   );

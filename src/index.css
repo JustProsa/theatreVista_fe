@@ -101,7 +101,8 @@ code {
   color: white !important;
 }
 
-.users-reports {
-  max-height: 100vh;
+.users-reports, .banned-users, .users {
+  max-height: 60vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }

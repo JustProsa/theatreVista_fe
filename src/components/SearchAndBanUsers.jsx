@@ -186,7 +186,7 @@ const SearchAndBanUsers = () => {
       </Card.Header>
       <Card.Body>
         {activeTab === "#users" && (
-          <div>
+          <div className="users">
             <Form inline className="mb-2">
               <Row>
                 <Col>
@@ -237,7 +237,7 @@ const SearchAndBanUsers = () => {
           </div>
         )}
         {activeTab === "#bannedUsers" && (
-          <div>
+          <div className="banned-users">
             {bannedUsers.length > 0 ? (
               bannedUsers.map((user) => (
                 <Row className="p-0 m-0 mt-2">

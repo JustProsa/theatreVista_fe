@@ -117,7 +117,8 @@ const UpdateUserModal = ({
 
       // Verifica che le due password coincidano
       if (password !== confirmPassword) {
-        console.error("Passwords do not match.");
+        console.error("La password non coincide. Riprova!");
+        window.alert("La Password non coincide. Riprova.");
         return;
       }
 
@@ -142,6 +143,9 @@ const UpdateUserModal = ({
       setConfirmPassword("");
     } catch (error) {
       console.error("Error updating password", error);
+      window.alert(
+        "OOOPS! Si è verificato un errore, ma potrebbe non essere colpa tua."
+      );
     }
   };
 
@@ -151,7 +155,7 @@ const UpdateUserModal = ({
 
   return (
     <>
-      <Form>
+      <Form className="p-2">
         {/* ... (rest of the form fields for non-sensitive data) */}
         <Form.Group controlId="formTitle" className="mb-3 p-0">
           <Form.Label>Nome</Form.Label>

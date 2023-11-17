@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import AxiosClient from "../client/client";
 import NavbarLayout from "../layouts/NavbarLayout";
@@ -12,6 +12,7 @@ const ShowDetails = () => {
   const { id } = useParams();
   const [show, setShow] = useState(null);
   const [user, setUser] = useState(null);
+  const [isLoading, setIsloading] = useState(false);
 
   const formatStartDate = (startDate) => {
     const options = {
@@ -54,9 +55,11 @@ const ShowDetails = () => {
   };
 
   const fetchShowDetails = async () => {
+    setIsloading(true);
     try {
       const response = await client.get(`/shows/${id}`);
       setShow(response.show);
+      setIsloading(false);
     } catch (error) {
       console.error("Error fetching show details:", error);
     }
@@ -74,7 +77,7 @@ const ShowDetails = () => {
           className="m-0"
           style={{ height: "100%", backgroundColor: "#dbd5c9" }}
         >
-          {show ? (
+          {!isLoading && show ? (
             <>
               <Card
                 style={{
@@ -146,7 +149,19 @@ const ShowDetails = () => {
               </div>
             </>
           ) : (
-            <p>Loading show details...</p>
+            <div
+              style={{
+                backgroundColor: "#dbd5c9",
+                height: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div>
           )}
         </div>
       </NavbarLayout>

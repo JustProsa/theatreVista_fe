@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Image, Button } from "react-bootstrap";
+import { Row, Col, Image, Button, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import AxiosClient from "../client/client";
 import NavbarLayout from "../layouts/NavbarLayout";
@@ -13,9 +13,11 @@ const MyArea = () => {
   const { username } = useParams();
   const [user, setUser] = useState(null);
   const [reviews, setReviews] = useState({ reviews: [] });
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
     try {
+      setIsLoading(true);
       const token = localStorage.getItem("loggedInUser");
       const userData = await client.get(`/users/details`, {
         headers: {
@@ -26,6 +28,7 @@ const MyArea = () => {
 
       const response = await client.get(`/reviews/user/${userData._id}`);
       setReviews(response);
+      setIsLoading(false);
 
       console.log("Dettagli dell'utente:", userData);
       console.log("Recensioni dell' utente:", response);
@@ -64,67 +67,91 @@ const MyArea = () => {
 
   return (
     <NavbarLayout>
-      {user && (
+      {isLoading ? (
+        // Se isLoading è true, mostra lo spinner centrato
+        <div
+          style={{
+            backgroundColor: "#dbd5c9",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
+        // Se isLoading è false, mostra il contenuto della pagina
         <div
           style={{
             backgroundColor: "#dbd5c9",
             height: "100%",
           }}
         >
-          <Row className="m-0 p-0">
-            <Col sm={12} md={6} className="m-0 p-0">
-              <div style={{ textAlign: "center", paddingTop: "3rem" }}>
-                <h1 className="mb-3">{user.username}</h1>
-                <div>
-                  <Image src={user.avatar} style={{ width: "35%" }} rounded />
-                </div>
-                <h2 className="mt-3">
-                  {user.firstName} {user.lastName}
-                </h2>
-                <h2>{formattedDate}</h2>
-                <h2>{user.email}</h2>
-                <div className="mt-5">
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => {
-                      handleDeleteUser(user?._id);
-                    }}
-                  >
-                    Elimina Account
-                  </Button>
-                </div>
+          {user && (
+            <div>
+              <Row className="m-0 p-0">
+                <Col sm={12} md={6} className="m-0 p-0">
+                  <div style={{ textAlign: "center", paddingTop: "3rem" }}>
+                    <h1 className="mb-3">{user.username}</h1>
+                    <div>
+                      <Image
+                        src={user.avatar}
+                        style={{ width: "35%" }}
+                        rounded
+                      />
+                    </div>
+                    <h2 className="mt-3">
+                      {user.firstName} {user.lastName}
+                    </h2>
+                    <h2>{formattedDate}</h2>
+                    <h2>{user.email}</h2>
+                    <div className="mt-5">
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => {
+                          handleDeleteUser(user?._id);
+                        }}
+                      >
+                        Elimina Account
+                      </Button>
+                    </div>
+                  </div>
+                </Col>
+                <Col sm={12} md={6} className="m-0 p-0">
+                  <UpdateUserModal
+                    userId={user?._id}
+                    firstName={user?.firstName}
+                    lastName={user?.lastName}
+                    email={user?.email}
+                    birthDay={userBirthDay}
+                    avatar={user?.avatar}
+                  />
+                </Col>
+              </Row>
+              <div
+                style={{
+                  backgroundColor: "#dbd5c9",
+                  height: "100%",
+                }}
+              >
+                <h2 className="m-5 text-center">Le tue Recensioni</h2>
+                {reviews.reviews.map((review) => (
+                  <ReviewCard
+                    key={review._id}
+                    userAvatar={review.user.avatar}
+                    comment={review.comment}
+                    rating={review.rating}
+                    user={review.user.username}
+                    showTitle={review.show.title}
+                    showId={review.show._id}
+                  />
+                ))}
               </div>
-            </Col>
-            <Col sm={12} md={6} className="m-0 p-0">
-              <UpdateUserModal
-                userId={user?._id}
-                firstName={user?.firstName}
-                lastName={user?.lastName}
-                email={user?.email}
-                birthDay={userBirthDay}
-                avatar={user?.avatar}
-              />
-            </Col>
-          </Row>
-          <div
-            style={{
-              backgroundColor: "#dbd5c9",
-              height: "100%",
-            }}
-          >
-            <h2 className="m-5 text-center">Le tue Recensioni</h2>
-            {reviews.reviews.map((review) => (
-              <ReviewCard
-                key={review._id}
-                userAvatar={review.user.avatar}
-                comment={review.comment}
-                rating={review.rating}
-                user={review.user.username}
-                showTitle={review.show.title}
-                showId={review.show._id}
-              />
-            ))}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </NavbarLayout>

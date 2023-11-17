@@ -40,18 +40,19 @@ const LoginModal = ({ onLogin }) => {
 
         console.log("Dettagli dell'utente:", userData);
         onLogin(userData);
-        setUser(userData);
+        window.alert(`Bentornatə ${userData.username}! Ready for the Theatre?`);
       } else {
         console.log("OOOOPS!");
-        windows.alert(
-          "C'è un problema con il login, riprova o prega il demonio"
-        );
       }
 
       setLogin(response);
       console.log(response);
+      // window.alert(`Bentornatə ${userData.username}! Ready for the Theatre?`);
     } catch (error) {
       console.log(error);
+      window.alert(
+        "C'è un problema con il login, riprova o prega il demonio. O magari hai solo sbagliato Username o Password! :)"
+      );
     }
   };
 
