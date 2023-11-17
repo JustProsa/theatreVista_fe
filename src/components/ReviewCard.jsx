@@ -1,6 +1,10 @@
-import React from "react";
-import { Container, Navbar, Card, NavLink } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Navbar, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import AxiosClient from "../client/client";
+
+const client = new AxiosClient();
+const token = localStorage.getItem("loggedInUser");
 
 const ReviewCard = ({
   userAvatar,
@@ -11,7 +15,46 @@ const ReviewCard = ({
   showId,
   createdAt,
   userId,
+  reviewId,
 }) => {
+  const [loggedUser, setLoggedUser] = useState({});
+
+  const getUserDetails = async () => {
+    try {
+      const userData = await client.get(`/users/details`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setLoggedUser(userData);
+    } catch (error) {
+      console.log("Errore nella get dei dati utente");
+    }
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    if (
+      window.confirm("Sei sicuro di voler eliminare questa recensione?") &&
+      userId === loggedUser?._id
+    ) {
+      try {
+        const response = await client.delete(`/reviews/${reviewId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log("Review deleted:", response);
+        window.alert("Recensione eliminata con successo!");
+      } catch (error) {
+        console.error("Error deleting report", error);
+        window.alert(
+          "OPS! A quanto pare c'è un problema, ma potrebbe non essere colpa tua."
+        );
+      }
+    }
+  };
+
   const formatCreatedAt = (createdAt) => {
     const options = {
       year: "numeric",
@@ -23,6 +66,10 @@ const ReviewCard = ({
 
     return new Date(createdAt).toLocaleString("it-IT", options);
   };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   return (
     <>
@@ -76,6 +123,16 @@ const ReviewCard = ({
           <Card.Text style={{ color: "white", fontSize: "0.8rem" }}>
             {formatCreatedAt(createdAt)}
           </Card.Text>
+          {userId === loggedUser?._id && (
+            <Card.Text style={{ color: "white", fontSize: "0.8rem" }}>
+              <Button
+                variant="danger"
+                onClick={() => handleDeleteReview(reviewId)}
+              >
+                Elimina recensione
+              </Button>
+            </Card.Text>
+          )}
         </Card.Body>
       </Card>
     </>

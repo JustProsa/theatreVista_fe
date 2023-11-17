@@ -47,6 +47,8 @@ const ReviewList = ({ showId }) => {
           <ReviewCard
             key={review._id}
             userAvatar={review.user.avatar}
+            userId={review.user._id}
+            reviewId={review._id}
             comment={review.comment}
             rating={review.rating}
             user={review.user.username}
