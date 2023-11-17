@@ -28,3 +28,5 @@ const App = () => {
 };
 
 export default App;
+
+// Un ringraziamento speciale a tutto il Team di EPICODE, che ha reso possibile quest'avventura <3
